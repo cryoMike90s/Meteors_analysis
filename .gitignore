@@ -1,0 +1,6 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+csv_meteor_file.csv
+meteors.db
+meteors_client_secret.json
