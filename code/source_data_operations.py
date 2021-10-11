@@ -6,6 +6,9 @@ import sqlalchemy
 
 
 def import_data_from_source():
+    """
+    Get data from chosen source and create normalized (flat) data frame
+    """
     http = urllib3.PoolManager(cert_reqs="CERT_REQUIRED", ca_certs=certifi.where())
     url = 'https://data.nasa.gov/resource/gh4g-9sfh.json'
     r = http.request('GET', url)
@@ -16,7 +19,9 @@ def import_data_from_source():
 
 
 def processing_data():
-
+    """
+    Take DataFrame from previous function, thrown away selected columns and set new index
+    """
     df = import_data_from_source()
 
     df.drop([':@computed_region_cbhk_fwbd', ':@computed_region_nnqa_25f4'], axis=1, inplace=True)
@@ -33,19 +38,21 @@ def processing_data():
 
 
 def export_to_csv():
-
+    """
+    Function to export output from processing_data() to 'csv' file
+    """
     df = processing_data()
-    df.to_csv('csv_meteor_file.csv', encoding='utf-8', index=False)
+    df.to_csv(r'files/csv_meteor_file.csv', encoding='utf-8', index=False)
 
     return "Exporting data process done"
 
 
 def export_to_database():
-
-    db = sqlalchemy.create_engine('sqlite:///meteors.db')
+    """
+    Function to export output from processing_data() to database file
+    """
+    db = sqlalchemy.create_engine('sqlite:///files/meteors.db')
     df = processing_data()
     df.to_sql('meteors', db, if_exists="replace")
 
 
-export_to_csv()
-export_to_database()

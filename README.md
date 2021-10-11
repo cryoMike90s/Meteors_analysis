@@ -1,63 +1,81 @@
 # Meteors-analysis
-> Analysis based on data from source: https://data.nasa.gov/resource/gh4g-9sfh.json . This data
-> is part of greater surce avaiable with description here: https://data.nasa.gov/Space-Science/Meteorite-Landings/gh4g-9sfh
+
+> Simple console-type script which involves Google Sheet and Drive API to achieve some analytical results from selected
+> data (in this sample it contains data from https://data.nasa.gov/resource/gh4g-9sfh.json) in full automatic way 
+> (by console usage).
 
 
 ## Table of Contents
 
+* [General Info](#general-information)
 * [Technologies Used](#technologies-used)
 * [Setup](#setup)
 * [Acknowledgements](#acknowledgements)
+* [Hints](#hints)
 
 <!-- * [License](#license) -->
 
+## General Information
+The main reason to create such script was task from one of employee during his requirement process. This was one task
+which contains subsequent minor quests:
+- Download JSON file from given source and export data into csv
+- Export csv file with data into Google Sheet
+- Create pivot table which presents how many meteors divided by class fell in every year
+- Write a query which returns average mass of every meteor class  
+- Write second query which returns meteors class which mass does not exceed 5000 grams 
 
-## Technologies Used
+## Technologies/Libraries Used
 - Python - version 3.9.2
 - pandas - version 1.2.4
 - sqlite3
+- sqlalchemy
 - google apis (Google Sheet API and Google Drive API)
+- json
+- urllib3
+- certifi
+- gspread
 
 
 
 ## Setup
 ```shell
 # Get the code
-git 
+git clone https://github.com/cryoMike90s/Meteors_analysis
 cd Meteors_analysis
-
-# Run subsequent scripts
-create_spreadsheet.py
-source_data_operations.py
-import_csv_to_google.py
-create_pivot_table.py
-sql_queries.py
-
+run console.py
 ```
-### Spreadsheet id
 
-At this moment the scripts are semi-automated thus there is need to copy
-spreadsheet id after creation of new spreadsheet and change it in presented place in main.py:
+Subsequent steps after run `console.py` are easy to deal with.
 
-![image_1](media/id.PNG)
-![image_2](media/key.PNG)
+### API
 
-### Source and destination sheets number for pivot table
+To make possible to use Sheet and Drive APIS there is mandatory to enable them in our project and then
+set authorization in a way which is described and explained point by point here:
+https://www.youtube.com/watch?v=4ssigWmExak .
 
-Also there is need to change source and destination sheets numbers in
-script connected with creation of pivot table (create_pivot_table.py)
+Please make sure that your `files/meteors_client_secret.json` is that one file from Service 
+Account in API authorization tab and the original name is changed to pointed one.
 
-![image_3](media/pivot.PNG)
+![image_1](media/service.PNG)
 
 
 ## Acknowledgements
-To make possible to use this script is needed at first to set properties of projects
-for Google Apis.
 
 Those resources could be helpful:
 * https://www.youtube.com/watch?v=4ssigWmExak
 * https://developers.google.com/sheets/api
 * https://www.youtube.com/watch?v=sAgWCbGMzTo&list=PL3JVwFmb_BnSee8RFaRPZ3nykuMRlaQp1
+
+## Hints
+
+If described script is run by utilization of IntelliJIdea it could occur that is mandatory to
+set "Modify Run Configuration" of individual python files inside the `code` directory as below:
+
+![image_1](media/ide2.PNG)
+
+Please ignore described error value which is more information than problem:
+![image_1](media/pandas_p.PNG)
+
 
 
 <!-- Optional -->
